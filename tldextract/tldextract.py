@@ -274,11 +274,7 @@ class TLDExtract(object):
         settings passed to __init__.'''
         if LOG.isEnabledFor(logging.DEBUG):
             import difflib
-            snapshot_stream = pkg_resources.resource_stream(__name__, '.tld_set_snapshot')
-            with closing(snapshot_stream) as snapshot_file:
-                snapshot = sorted(
-                    json.loads(snapshot_file.read().decode('utf-8'))
-                )
+            snapshot = sorted(self._get_snapshot_tld_extractor())
             new = sorted(tlds)
             LOG.debug('computed TLD diff:\n' + '\n'.join(difflib.unified_diff(
                 snapshot,
